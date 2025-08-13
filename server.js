@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const userRoute = require('./routes/userRoutes');
-// const orderRoute = require('./routes/orderRoutes');
+const orderRoute = require('./routes/orderRoutes');
 const menuItemRoute = require('./routes/menuItemRoutes');
 
 
@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Routes
 app.use('/auth', userRoute);
-// app.use('/api', orderRoute);
+app.use('/api', orderRoute);
 app.use('/api', menuItemRoute);
 
 
