@@ -20,7 +20,7 @@ const orderSchema = new Schema({
         required: true /*hashed: not yet*/
     },
     createdBy: [{
-        type: mongoose.Schema.type.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     }],
     }
