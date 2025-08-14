@@ -1,10 +1,13 @@
 const User = require('../models/user');
+// const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
 
 const UserCont = {
     //create user
     registerUser: async (req, res) => {
         try {
             const {username, password, role } = req.body;
+            // const hashedPassword = await bcrypt.hash(password, 10);
             if (!username || !password || !role){
                 return res.status(400).json({error: 'invalid credentials'});
             }
@@ -12,7 +15,7 @@ const UserCont = {
             if(existingUser) {
                 return res.status(400).json({error: 'User already exists'});
             }
-                const newUser = await User.create({ username, password, role});
+                const newUser = await User.create({ username, password/*:hashedPassword */, role});
 
                 res.status(201).json({
                     message: 'User Created',
@@ -57,3 +60,4 @@ const UserCont = {
 };
 
 module.exports = UserCont;
+
