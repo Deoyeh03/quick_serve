@@ -1,6 +1,8 @@
 const User = require('../models/user');
-// const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken'); 
+
+const jwtSecret = process.env.JWT_SECRET;
 
 const UserCont = {
     //create user
@@ -32,7 +34,7 @@ const UserCont = {
     },
 
     // login user
-    loginUser: (req, res) => {
+    loginUser: async (req, res) => {
         try {
             const {username, password } = req.body;
 
@@ -47,11 +49,13 @@ const UserCont = {
             }
 
             //compare password
-            const isMatch =  User.findOne({password});
+            const isMatch =  await bcrypt.compare(password, user.password);
             if (!isMatch) {
                 return res.status(401).json({ error: 'Invalid credentials'});
             }
-            res.status(200).json({ message: 'Login successful'})
+            res.status(200).json({ message: 'Login successful'});
+
+            const token = jwt.sign({ userId: user._id}, jwtSecret)
            
         } catch (error) {
          console.log('Just dey play', error);
