@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
+const cookieParser = require('cookie-parser');
+const Mongostore = require('connect-mongo');
 const userRoute = require('./routes/userRoutes');
 const orderRoute = require('./routes/orderRoutes');
 const menuItemRoute = require('./routes/menuItemRoutes');
@@ -13,6 +15,15 @@ const PORT = process.env.PORT;
 connectDB();
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(session({
+    secret: 'Keyboard Dog',
+    resave: false,
+    saveUninitialized:true,
+    store:Mongostore.create({
+        mongoUrl:process.env.MONGODB_URI
+    })
+}));
 
 // Routes
 app.use('/auth', userRoute);

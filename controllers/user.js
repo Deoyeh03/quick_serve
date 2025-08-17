@@ -1,8 +1,10 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken'); 
+const jwt = require('jsonwebtoken');
 
 const jwtSecret = process.env.JWT_SECRET;
+
+
 
 const UserCont = {
     //create user
@@ -55,7 +57,8 @@ const UserCont = {
             }
             res.status(200).json({ message: 'Login successful'});
 
-            const token = jwt.sign({ userId: user._id}, jwtSecret)
+            const token = jwt.sign({ userId: user._id}, jwtSecret);
+            res.cookie('token', token);
            
         } catch (error) {
          console.log('Just dey play', error);
