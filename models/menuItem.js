@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const menuItemSchema = new Schema({
+    avatar: {
+        type:String
+    },
     menuName: {
         type: String,
         required:true

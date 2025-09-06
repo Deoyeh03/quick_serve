@@ -1,5 +1,6 @@
 const express = require('express');
-const menuItems = require('../controllers/menuItem')
+const menuItems = require('../controllers/menuItem');
+const upload = require('../config/multer');
 
 const router = express.Router();
 
@@ -7,10 +8,10 @@ const router = express.Router();
 router.get('/menu', menuItems.getAllMenuItem);
 
 // Create menu item Auth - yes(Admin)
-router.post('/menu', menuItems.createMenuItem);
+router.post('/menu', upload.single('avatar'), menuItems.createMenuItem);
 
 // Update menu item Auth - yes(Admin)
-router.put('/menu/:id', menuItems.updateMenuItem);
+router.put('/menu/:id',upload.single('avatar'), menuItems.updateMenuItem);
 
 // Delete menu item Auth - yes(Admin)
 router.delete('/menu/:id', menuItems.deleteMenuItem);

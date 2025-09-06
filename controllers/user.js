@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const pino = require('pino-http');
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -13,11 +14,13 @@ const UserCont = {
             const {username, password, role } = req.body;
             // const hashedPassword = await bcrypt.hash(password, 10);
             if (!username || !password || !role){
+                req.log.info('something')
                 return res.status(400).json({error: 'invalid credentials'});
             }
             const existingUser = await User.findOne({username});
             if(existingUser) {
                 return res.status(400).json({error: 'User already exists'});
+                // req.log.info('something')
             }
                 const newUser = await User.create({ username, password/*:hashedPassword */, role});
 
